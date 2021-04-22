@@ -2,10 +2,10 @@ import csv
 import string
 
 
-def add_available(left_side, right_side, available, reserved):
-    for char_1 in left_side:
+def add_available(a_chars, b_chars, available, reserved):
+    for char_1 in a_chars:
         prefix_line = []
-        for prefix in [char_1 + char_2 for char_2 in right_side]:
+        for prefix in [char_1 + char_2 for char_2 in b_chars]:
             if prefix not in reserved:
                 prefix_line.append(prefix)
         available.append(char_1 + ": " + " ".join(prefix_line))
@@ -20,18 +20,18 @@ with open('table.txt', newline='') as table_file:
         reserved_prefixes.append(row[0].strip().upper()[:2])
 
 
-left_side = string.ascii_uppercase
-right_side_part = {'1': string.ascii_uppercase,
+a_chars = string.ascii_uppercase
+b_chars_part = {'1': string.ascii_uppercase,
                    '2': string.digits, '3': '_!-#'}
 choice = 'not_q'
 
 while(choice != 'q' and choice != 'Q'):
     available_prefixes = []
-    right_side = right_side_part.get(choice, list_part['1']
-                                     + list_part['2'] + list_part['3'])
+    b_chars = b_chars_part.get(choice, b_chars_part['1']
+                                     + b_chars_part['2'] + b_chars_part['3'])
 
-    add_available(left_side, right_side, available_prefixes, reserved_prefixes)
-    add_available('#', right_side.replace('#', ''),
+    add_available(a_chars, b_chars, available_prefixes, reserved_prefixes)
+    add_available('#', b_chars.replace('#', ''),
                   available_prefixes, reserved_prefixes)
 
     for row in available_prefixes:
