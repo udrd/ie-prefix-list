@@ -1,6 +1,5 @@
 import csv
 import string
-from itertools import product
 
 
 def add_available(left_side, right_side, available, reserved):
@@ -19,14 +18,23 @@ with open('table.txt', newline='') as table_file:
     prefix_list = csv.reader(table_file, delimiter='\t')
     for row in prefix_list:
         reserved_prefixes.append(row[0].strip().upper()[:2])
-# print(reserved_prefixes)
 
-available_prefixes = []
+
 left_side = string.ascii_uppercase
-right_side = string.ascii_uppercase + string.digits + '_!-#'
+right_side_part = {'1': string.ascii_uppercase,
+                   '2': string.digits, '3': '_!-#'}
+choice = 'not_q'
 
-add_available(left_side, right_side, available_prefixes, reserved_prefixes)
-add_available('#', right_side[:-1], available_prefixes, reserved_prefixes)
+while(choice != 'q' and choice != 'Q'):
+    available_prefixes = []
+    right_side = right_side_part.get(choice, list_part['1']
+                                     + list_part['2'] + list_part['3'])
 
-for row in available_prefixes:
-    print(row)
+    add_available(left_side, right_side, available_prefixes, reserved_prefixes)
+    add_available('#', right_side.replace('#', ''),
+                  available_prefixes, reserved_prefixes)
+
+    for row in available_prefixes:
+        print(row)
+    choice = input("Enter [1]: letters, [2]: digits, "
+                   "[3]: _!-#, [4/other]: all, [q]: quit > ")
